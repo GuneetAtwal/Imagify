@@ -1,0 +1,3 @@
+rootProject.name = "Imagify"
+include ':app'
+include ':data'
