@@ -15,6 +15,8 @@ class HomeViewModel(private val imageRepository: ImageRepository) : ViewModel() 
     private val _imageLiveData = MutableLiveData<ResourceState<ByteArray>>()
     val imageLiveData = _imageLiveData as LiveData<ResourceState<ByteArray>>
 
+    var isNetworkAvailable = false
+
     var memoryCache: LruCache<String, Bitmap>
 
     init {

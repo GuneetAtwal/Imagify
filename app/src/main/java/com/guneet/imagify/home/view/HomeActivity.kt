@@ -6,7 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.guneet.imagify.base.extensions.loadImage
 import com.guneet.imagify.base.extensions.observe
 import com.guneet.imagify.base.extensions.setVisibility
+import com.guneet.imagify.base.extensions.showNoInternetView
+import com.guneet.imagify.base.utils.InternetCheckUtil
 import com.guneet.imagify.data.entities.base.ResourceState
+import com.guneet.imagify.data.enums.AppErrorCodes
 import com.guneet.imagify.data.repositories.ImageRepository
 import com.guneet.imagify.databinding.ActivityHomeBinding
 import com.guneet.imagify.home.viewmodel.HomeViewModel
@@ -16,6 +19,8 @@ import org.koin.android.ext.android.inject
 class HomeActivity : AppCompatActivity() {
 
     private val imageRepository: ImageRepository by inject()
+
+    private val internetCheckUtil by lazy { InternetCheckUtil() }
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: ActivityHomeBinding
@@ -29,8 +34,23 @@ class HomeActivity : AppCompatActivity() {
         val factory = HomeViewModelFactory(imageRepository = imageRepository)
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
+        checkNetworkState()
         observeData()
         setClickListeners()
+    }
+
+    private fun checkNetworkState() {
+        viewModel.isNetworkAvailable = internetCheckUtil.isConnectedToInternet(this)
+        if (viewModel.isNetworkAvailable.not()) {
+            showNoInternetView(::checkNetworkState)
+        } else {
+            binding.btnChange.isEnabled = true
+        }
+    }
+
+    private fun fetchImage() {
+        showLoading(true)
+        viewModel.getImage()
     }
 
     private fun observeData() {
@@ -42,6 +62,9 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 is ResourceState.Failure -> {
+                    if (it.statusCode == AppErrorCodes.NO_INTERNET_CONNECTION.statusCode) {
+                        showNoInternetView(::fetchImage)
+                    }
                     it.exception.printStackTrace()
                 }
             }
@@ -50,9 +73,13 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setClickListeners() {
         binding.btnChange.setOnClickListener {
-            showLoading(true)
-            viewModel.getImage()
+            fetchImage()
         }
+    }
+
+    private fun showNoInternetView(onRetry: () -> Unit) {
+        binding.includeNoInternetLayout.root.showNoInternetView(onRetry)
+        binding.btnChange.isEnabled = false
     }
 
     private fun showLoading(show: Boolean) {

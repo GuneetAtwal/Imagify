@@ -4,18 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.view.HomeActivity">
+    tools:context=".home.view.HomeActivity"
+    android:animateLayoutChanges="true">
+
+    <include
+        android:id="@+id/include_no_internet_layout"
+        layout="@layout/include_no_internet_layout"
+        android:layout_width="0dp"
+        android:layout_margin="24dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/iv_placeholder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="24dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/btn_change"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_no_internet_layout"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
@@ -26,7 +39,7 @@
         android:text="@string/change_image"
         android:paddingVertical="20dp"
         android:background="@drawable/button_round_background"
-        android:textColor="@color/light_grey"
+        android:textColor="@color/button_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +55,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/iv_placeholder"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
