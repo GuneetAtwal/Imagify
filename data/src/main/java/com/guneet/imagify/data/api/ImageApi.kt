@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ImageApi {
-    @GET("200/300")
+    @GET("300/200")
     fun getImage(): Call<ResponseBody>
 }

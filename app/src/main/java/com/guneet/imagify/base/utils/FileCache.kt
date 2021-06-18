@@ -1,16 +1,15 @@
 package com.guneet.imagify.base.utils
 
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import com.guneet.imagify.data.preferences.ImagePrefs
 import com.jakewharton.disklrucache.DiskLruCache
-import java.io.File
-import java.io.IOException
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
+import java.io.*
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.thread
@@ -32,12 +31,11 @@ class FileCache(private val context: Context) {
                 diskCacheStarting = false
                 diskCacheLockCondition.signalAll()
             }
-        }.start()
+        }.run()
     }
 
     fun addBitmapToCache(key: String, bitmap: Bitmap) {
         prefs.setImageName(key)
-        Log.d("666", "saving bitmap ${bitmap.hashCode()}")
 
         synchronized(diskCacheLock) {
             diskLruCache?.apply {
@@ -64,10 +62,11 @@ class FileCache(private val context: Context) {
             return get(key)
         }
 
+
     private fun put(key: String, bitmap: Bitmap) {
         try {
             val editor = diskLruCache?.edit(key) ?: return
-            val out = ObjectOutputStream(editor.newOutputStream(0))
+            val out = BufferedOutputStream(editor.newOutputStream(0))
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
             out.close()
             editor.commit()
@@ -84,7 +83,7 @@ class FileCache(private val context: Context) {
                 inPreferredConfig = Bitmap.Config.ARGB_8888
             }
 
-            val out = ObjectInputStream(snapshot?.getInputStream(0))
+            val out = BufferedInputStream(snapshot?.getInputStream(0))
 
             BitmapFactory.decodeStream(out, null, options)
         } catch (e: Exception) {
@@ -104,10 +103,6 @@ class FileCache(private val context: Context) {
             }
 
         return File(cachePath + File.separator + uniqueName)
-    }
-
-    fun clear() {
-        diskLruCache?.delete()
     }
 
     companion object {

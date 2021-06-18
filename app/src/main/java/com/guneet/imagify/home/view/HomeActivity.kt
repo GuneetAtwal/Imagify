@@ -8,12 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.guneet.imagify.base.extensions.observe
 import com.guneet.imagify.base.extensions.setVisibility
 import com.guneet.imagify.base.extensions.showNoInternetView
+import com.guneet.imagify.base.utils.ImageLoader
 import com.guneet.imagify.base.utils.InternetCheckUtil
 import com.guneet.imagify.data.entities.base.ResourceState
 import com.guneet.imagify.data.enums.AppErrorCodes
 import com.guneet.imagify.data.repositories.ImageRepository
 import com.guneet.imagify.databinding.ActivityHomeBinding
-import com.guneet.imagify.base.utils.ImageLoader
 import com.guneet.imagify.home.viewmodel.HomeViewModel
 import com.guneet.imagify.home.viewmodel.HomeViewModelFactory
 import org.koin.android.ext.android.inject
@@ -81,6 +81,7 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+
         imageLoader.loadLastCachedImage(binding.ivPlaceholder)
     }
 
