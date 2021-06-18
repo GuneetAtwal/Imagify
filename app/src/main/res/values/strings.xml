@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Imagify</string>
+    <string name="app_name" translatable="false">Imagify</string>
     <string name="change_image">Change Image</string>
     <string name="offline">Offline</string>
     <string name="no_internet_connection_desc">Your network is unavailable. Check your data or wifi connection</string>

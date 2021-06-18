@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="change_image">ਚਿੱਤਰ ਨੂੰ ਬਦਲੋ</string>
+    <string name="offline">ਇੰਟਰਨੈਟ ਤੋਂ ਬਿਨਾਂ</string>
+    <string name="no_internet_connection_desc">ਤੁਹਾਡਾ ਨੈਟਵਰਕ ਉਪਲਬਧ ਨਹੀਂ ਹੈ. ਆਪਣੇ ਡੇਟਾ ਜਾਂ ਵਾਈਫਾਈ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ</string>
+    <string name="retry">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
+</resources>
