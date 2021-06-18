@@ -1,7 +1,9 @@
 package com.guneet.imagify.home.view
 
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.ViewModelProvider
 import com.guneet.imagify.base.extensions.observe
 import com.guneet.imagify.base.extensions.setVisibility
@@ -36,6 +38,13 @@ class HomeActivity : AppCompatActivity() {
 
         val factory = HomeViewModelFactory(imageRepository = imageRepository)
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+
+        binding.scrollViewHome.post {
+            binding.scrollViewHome.updateLayoutParams {
+                this as FrameLayout.LayoutParams
+                bottomMargin = binding.btnChange.measuredHeight
+            }
+        }
 
         checkNetworkState()
         observeData()
