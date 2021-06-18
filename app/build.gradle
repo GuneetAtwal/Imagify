@@ -29,9 +29,5 @@ dependencies {
     // Koin
     implementation "io.insert-koin:koin-android:$koin_version"
 
-//    implementation "org.koin:koin-android:$koin_version"
-//    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-//    implementation 'org.koin:koin-androidx-scope:2.0.1'
-//    implementation "org.koin:koin-android-architecture:0.9.3"
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2"
+    implementation 'com.jakewharton:disklrucache:2.0.2'
 }
